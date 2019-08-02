@@ -3,6 +3,7 @@ import IBlock from '../../interfaces/IBlock';
 import { ITaskStore } from '../../state/task';
 import BlockComponent from '../../components/block';
 import TaskComponent from '../../components/task';
+import AddTask from '../../components/add-task/index';
 import { inject, observer } from 'mobx-react';
 
 
@@ -34,6 +35,9 @@ class Block extends Component<IProps> {
                             )
                         })
                     )}
+                    <AddTask
+                        callBack={(value) => console.log(value)}
+                    />
                 </React.Fragment>
             )
         }else {

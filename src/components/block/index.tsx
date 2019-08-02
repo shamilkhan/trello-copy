@@ -1,12 +1,23 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import IBlock from '../../interfaces/IBlock';
+import Paper from '@material-ui/core/Paper';
 
+const useStyles = makeStyles(theme => ({
+    paper: {
+        width: 150,
+        color: "#737d97",
+        backgroundColor: "transparent",
+        padding: theme.spacing(0.5)
+    }
+}));
 
-export default function(block: IBlock) {
-    const {id, name} = block;
+export default function (block: IBlock) {
+    const { id, name } = block;
+    const classes = useStyles();
     return (
-        <div>
+        <Paper className={classes.paper}>
             {id} {name}
-        </div>
+        </Paper>
     )
 }

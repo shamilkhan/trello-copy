@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ITable from '../../interfaces/IBlock';
 import IBlock from '../../interfaces/IBlock';
 import { inject, observer } from 'mobx-react';
+import TableComponent from '../../components/table';
 import Block from '../block';
 
 interface IProps {
@@ -14,15 +15,19 @@ interface IProps {
 @observer
 class Table extends Component<IProps> {
     render() {
-        const { tableStore, blockStore } = this.props;
+        const { blockStore } = this.props;
         if (blockStore) {
             const blocks: IBlock[] = blockStore.blocks;
-            return blocks.map(block => (
-                <Block
-                    key={block.id}
-                    {...{block}}
-                />
-            ))
+            return (
+                <TableComponent>
+                    {blocks.map(block => (
+                        <Block
+                            key={block.id}
+                            {...{ block }}
+                        />
+                    ))}
+                </TableComponent>
+            )
         } else {
             return null;
         }
