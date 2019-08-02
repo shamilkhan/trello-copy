@@ -20,7 +20,8 @@ function App() {
   return (
     <Provider {...stores}>
       <Typography component="div" style={containerStyle}>
-        <Table />
+        {/* <Table /> */}
+        &#128540;
       </Typography>
     </Provider>
   );
