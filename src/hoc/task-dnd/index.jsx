@@ -29,6 +29,7 @@ function collect(connect, monitor) {
     return {
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging(),
+    connectDropTarget: connect.dropTarget()
   }
 }
 
@@ -38,8 +39,8 @@ function Card(props) {
 
   // These two props are injected by React DnD,
   // as defined by your `collect` function above:
-  const { isDragging, connectDragSource } = props
-  console.log(isDragging);
+  const { isDragging, connectDragSource } = props;
+  
   return connectDragSource(
     <div>
      {isDragging || props.children}
