@@ -4,10 +4,14 @@ import { tasks as mockTasks } from '../mock';
 
 export interface ITaskStore {
     tasks: ITask[],
-    addTask: Function
+    addTask: (task: ITask) => void
 }
 
 class Task<ITaskStore> {
+    constructor() {
+        this.addTask = this.addTask.bind(this);
+    }
+    
     @observable
     tasks: ITask[] = mockTasks;
 

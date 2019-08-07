@@ -1,11 +1,12 @@
 import React, { useRef } from 'react';
+import ITask from '../../interfaces/ITask';
 
 interface IProps {
-    callBack: (value: string) => void;
+    callBack: (taskName: string) => void;
 }
 
 export default function (props: IProps) {
-    let inputRef = useRef(null);
+    let inputRef = useRef<HTMLInputElement>(null);
     return (
         <div>
             <input ref={inputRef} />
@@ -13,10 +14,10 @@ export default function (props: IProps) {
                 const { callBack } = props;
                 if (typeof callBack === "function") {
                     if (inputRef) {
-                        const current: HTMLInputElement = inputRef.current;
+                        const {current} = inputRef;
                         if (typeof current === "object" && current !== null) {
-                            console.dir(current);
-                            console.dir(current.value);                            
+                           const {value} = current;
+                           callBack(value);                       
                         }
                     }
                 }

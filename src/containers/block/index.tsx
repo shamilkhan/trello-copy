@@ -5,6 +5,8 @@ import BlockComponent from '../../components/block';
 import TaskComponent from '../../components/task';
 import AddTask from '../../components/add-task/index';
 import { inject, observer } from 'mobx-react';
+import shortId from 'shortid';
+import ITask from '../../interfaces/ITask';
 
 
 interface IProps {
@@ -19,6 +21,7 @@ class Block extends Component<IProps> {
         const { block, taskStore } = this.props;
         const { id } = block;
         if (taskStore) {
+            const {addTask} = taskStore;
             const tasks = taskStore.tasks.filter(task => task.blockId === id);
             return (
                 <React.Fragment>
@@ -36,7 +39,14 @@ class Block extends Component<IProps> {
                         })
                     )}
                     <AddTask
-                        callBack={(value) => console.log(value)}
+                        callBack={(value) => {
+                            const task: ITask = {
+                                id: shortId.generate(),
+                                value,
+                                blockId: id
+                            }
+                            addTask(task);
+                        }}
                     />
                 </React.Fragment>
             )

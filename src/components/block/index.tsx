@@ -17,7 +17,7 @@ export default function (block: IBlock) {
     const classes = useStyles();
     return (
         <Paper className={classes.paper}>
-            {id} {name}
+            {name}
         </Paper>
     )
 }
