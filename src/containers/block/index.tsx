@@ -21,7 +21,7 @@ class Block extends Component<IProps> {
         const { block, taskStore } = this.props;
         const { id } = block;
         if (taskStore) {
-            const {addTask} = taskStore;
+            const { addTask, changePlaces } = taskStore;
             const tasks = taskStore.tasks.filter(task => task.blockId === id);
             return (
                 <React.Fragment>
@@ -33,7 +33,7 @@ class Block extends Component<IProps> {
                             return (
                                 <TaskComponent
                                     key={task.id}
-                                    {...{ ...task }}
+                                    {...{ task, changePlaces }}
                                 />
                             )
                         })
@@ -50,7 +50,7 @@ class Block extends Component<IProps> {
                     />
                 </React.Fragment>
             )
-        }else {
+        } else {
             return null;
         }
     }

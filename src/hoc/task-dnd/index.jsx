@@ -1,5 +1,5 @@
 import React from 'react'
-import { DragSource } from 'react-dnd'
+import { DragSource, DropTarget } from 'react-dnd'
 
 // Drag sources and drop targets only interact
 // if they have the same string type.
@@ -8,6 +8,58 @@ import { DragSource } from 'react-dnd'
 const Types = {
   CARD: 'card',
 }
+
+let lastChangeId = null;
+
+const dropTarget = {
+  canDrop(props, monitor) {
+    // You can disallow drop based on props or item
+    const item = monitor.getItem()
+    return true;
+  },
+  hover(props, monitor, component) {
+    const {id: hoverId, changePlaces} = props;
+    const {id } = monitor.getItem();
+    if(hoverId !== id && hoverId !== lastChangeId) {
+      changePlaces(id, hoverId);
+      lastChangeId = hoverId;
+    }
+  },
+
+  drop(props, monitor, component) {
+    if (monitor.didDrop()) {
+      // If you want, you can check whether some nested
+      // target already handled drop
+      return
+    }
+
+    // Obtain the dragged item
+    const item = monitor.getItem()
+    return item
+    // You can do something with it
+    // ChessActions.movePiece(item.fromPosition, props.position)
+
+    // You can also do nothing and return a drop result,
+    // which will be available as monitor.getDropResult()
+    // in the drag source's endDrag() method
+    return { moved: true }
+  },
+}
+
+
+function collect(connect, monitor) {
+  return {
+    // Call this function inside render()
+    // to let React DnD handle the drag events:
+    connectDropTarget: connect.dropTarget(),
+    // You can ask the monitor about the current drag state:
+    isOver: monitor.isOver(),
+    isOverCurrent: monitor.isOver({ shallow: true }),
+    canDrop: monitor.canDrop(),
+    itemType: monitor.getItemType(),
+  }
+}
+
 
 /**
  * Specifies the drag source contract.
@@ -24,29 +76,30 @@ const cardSource = {
 /**
  * Specifies which props to inject into your component.
  */
-function collect(connect, monitor) {
-   console.log(connect);
-    return {
+function dragCollect(connect, monitor) {
+  // console.log(connect);
+  return {
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging(),
-    connectDropTarget: connect.dropTarget()
+    // connectDropTarget: connect.dropTargets
   }
 }
 
 function Card(props) {
   // Your component receives its own props as usual
   const { id } = props
-
   // These two props are injected by React DnD,
   // as defined by your `collect` function above:
-  const { isDragging, connectDragSource } = props;
-  
+  const { isDragging, connectDragSource, connectDropTarget } = props;
   return connectDragSource(
-    <div>
-     {isDragging || props.children}
-    </div>,
+    connectDropTarget(
+      <div>
+        {props.children}
+      </div>
+    ),
   )
 }
 
+const WithDragSource = DragSource(Types.CARD, cardSource, dragCollect)(Card);
 // Export the wrapped version
-export default DragSource(Types.CARD, cardSource, collect)(Card)
+export default DropTarget(Types.CARD, dropTarget, collect)(WithDragSource);

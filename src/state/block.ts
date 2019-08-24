@@ -5,7 +5,7 @@ import { blocks as mockBlocks} from '../mock/';
 
 export interface IBlockStore {
     blocks: IBlock[],
-    addNewBlock: Function
+    addNewBlock: Function,
 }
 
 class Block<IBlockStore> {
@@ -16,7 +16,6 @@ class Block<IBlockStore> {
     addNewBlock(block: IBlock) {
         this.blocks.push(block);
     }
-
 }
 
 export default new Block();

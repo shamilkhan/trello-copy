@@ -13,11 +13,13 @@ const useStyles = makeStyles(theme => ({
         marginTop: theme.spacing(1)
     }
 }));
-export default function (task: ITask) {
+export default function (props: any) {
+    const {task, changePlaces} = props;
+    console.log(props);
     const { id, value } = task;
     const classes = useStyles();
     return (
-        <TaskDnd>
+        <TaskDnd {...{id, changePlaces}}>
             <Paper className={classes.paper}>
                 {value}
             </Paper>
