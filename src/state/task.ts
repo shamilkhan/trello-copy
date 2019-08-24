@@ -4,45 +4,67 @@ import { tasks as mockTasks } from '../mock';
 
 export interface ITaskStore {
     tasks: ITask[],
-    addTask: (task: ITask) => void
-    changePlaces: (firstId: number, secondId: number) => void
+    activeTask: ITask | null,
+    addTask: (task: ITask) => void,
+    changePlaces: (firstId: number, secondId: number) => void,
+    setActiveTask: (task: ITask) => void
 }
 
 class Task<ITaskStore> {
     constructor() {
         this.addTask = this.addTask.bind(this);
         this.changePlaces = this.changePlaces.bind(this);
+        this.setActiveTask = this.setActiveTask.bind(this);
     }
 
     @observable
     tasks: ITask[] = mockTasks;
+    /**For popup */
+    @observable
+    activeTask: ITask | null = null;
 
     @action
     addTask(task: ITask) {
         this.tasks.push(task)
     }
+
     @action
     changePlaces(firstId: string, secondId: string) {
-        const {tasks} = this;
+        const { tasks } = this;
         const firstTask = tasks.find(task => task.id === firstId);
         const secondTask = tasks.find(task => task.id === secondId);
-        if(firstTask && secondTask) {
-            this.tasks = tasks.map(task => {
-                const {id} = task;
-                if(id === firstId) {
-                    return {
-                        ...task,
-                        value: secondTask.value
+        /**if from one block */
+        if (firstTask && secondTask) {
+            if (firstTask.blockId === secondTask.blockId) {
+                this.tasks = tasks.map(task => {
+                    const { id } = task;
+                    if (id === firstId) {
+                        return { ...secondTask }
+                    } else if (id === secondId) {
+                        return { ...firstTask }
                     }
-                }else if(id === secondId) {
-                    return {
-                        ...task,
-                        value: firstTask.value
+                    return task;
+                })
+            }
+            /**Move from one block to another */
+            else {
+                this.tasks = tasks.map(task => {
+                    const { id } = task;
+                    if (id === firstId) {
+                        return {
+                            ...task,
+                            blockId: secondTask.blockId
+                        }
                     }
-                }
-                return task;
-            })
+                    return task;
+                });
+            }
         }
+    }
+
+    @action
+    setActiveTask(task: ITask) {
+        this.activeTask = task;
     }
 }
 

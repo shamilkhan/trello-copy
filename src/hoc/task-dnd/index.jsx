@@ -9,7 +9,6 @@ const Types = {
   CARD: 'card',
 }
 
-let lastChangeId = null;
 
 const dropTarget = {
   canDrop(props, monitor) {
@@ -20,9 +19,8 @@ const dropTarget = {
   hover(props, monitor, component) {
     const {id: hoverId, changePlaces} = props;
     const {id } = monitor.getItem();
-    if(hoverId !== id && hoverId !== lastChangeId) {
+    if(hoverId !== id) {
       changePlaces(id, hoverId);
-      lastChangeId = hoverId;
     }
   },
 
@@ -94,7 +92,7 @@ function Card(props) {
   return connectDragSource(
     connectDropTarget(
       <div>
-        {props.children}
+        {React.cloneElement(props.children, {isDragging})}
       </div>
     ),
   )

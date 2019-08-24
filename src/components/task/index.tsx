@@ -1,7 +1,6 @@
 import React from 'react';
 import TaskDnd from '../../hoc/task-dnd';
 import { makeStyles } from '@material-ui/core/styles';
-import ITask from '../../interfaces/ITask';
 import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles(theme => ({

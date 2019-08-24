@@ -4,6 +4,7 @@ import ITask from '../interfaces/ITask';
 
 const reactId: string = shortId.generate();
 const jsId: string = shortId.generate();
+const gitId: string = shortId.generate();
 
 export const blocks: Array<IBlock> = [
     {
@@ -13,6 +14,10 @@ export const blocks: Array<IBlock> = [
     {
         id: jsId,
         name: "JS",
+    },
+    {
+        id: gitId,
+        name: "Git"
     }
 ]
 
@@ -34,9 +39,16 @@ const practiceWithJs: ITask = {
     value: "use generators",
 }
 
+const rebaseGit: ITask = {
+    id: shortId.generate(),
+    blockId: gitId,
+    value: "learn rebase git" 
+}
+
 export const tasks: Array<ITask> = [
     learnDnd,
     learnMobX,
-    practiceWithJs
+    practiceWithJs,
+    rebaseGit
 ]
 
