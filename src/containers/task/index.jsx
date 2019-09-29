@@ -2,7 +2,6 @@ import React from 'react'
 import { DragSource, DropTarget } from 'react-dnd'
 import styled from 'styled-components';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 
 const TaskElem = styled.div`
     width: 180px;
@@ -47,8 +46,6 @@ const dropTarget = {
     hover(props, monitor, component) {
         const { id: hoverId, changePlaces } = props;
         const { id } = monitor.getItem();
-        // console.log(id, hoverId, props);s
-        console.log(monitor, component, props);
         if (hoverId !== id) {
             changePlaces(id, hoverId);
         }
@@ -105,7 +102,6 @@ const cardSource = {
  * Specifies which props to inject into your component.
  */
 function dragCollect(connect, monitor) {
-    // console.log(connect);
     return {
         connectDragSource: connect.dragSource(),
         isDragging: monitor.isDragging(),
@@ -114,8 +110,7 @@ function dragCollect(connect, monitor) {
 }
 
 function Card(props) {
-    const { task, setActiveTask } = props;
-    console.log(props);
+    const { task, setActiveTask, activeTask } = props;
     const { value } = task;
     // These two props are injected by React DnD,
     // as defined by your `collect` function above:
@@ -129,7 +124,7 @@ function Card(props) {
                 >
                     {value}
                 </TaskElem>
-            </div>
+            </div >
         ),
     )
 }

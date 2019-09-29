@@ -9,12 +9,11 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: "#333c57",
         color: "#878ea9",
         padding: theme.spacing(2),
-        marginTop: theme.spacing(1)
+        marginTop: theme.spacing(1),
     }
 }));
 export default function (props: any) {
     const {task, changePlaces} = props;
-    console.log(props);
     const { id, value } = task;
     const classes = useStyles();
     return (

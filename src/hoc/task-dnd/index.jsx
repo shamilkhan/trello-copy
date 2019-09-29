@@ -12,8 +12,6 @@ const Types = {
 
 const dropTarget = {
   canDrop(props, monitor) {
-    // You can disallow drop based on props or item
-    const item = monitor.getItem()
     return true;
   },
   hover(props, monitor, component) {
@@ -75,7 +73,6 @@ const cardSource = {
  * Specifies which props to inject into your component.
  */
 function dragCollect(connect, monitor) {
-  // console.log(connect);
   return {
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging(),
