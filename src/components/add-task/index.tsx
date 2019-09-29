@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import ITask from '../../interfaces/ITask';
 
 interface IProps {
     callBack: (taskName: string) => void;

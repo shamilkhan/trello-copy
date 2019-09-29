@@ -8,15 +8,17 @@ const useStyles = makeStyles(theme => ({
         height: '100vh',
         width: '100vw',
         padding: theme.spacing(4),
+        display: "flex",
         flexGrow: 1,
-        flexDirection: "row"
+        flexDirection: "row",
+        overflow: "hidden"
     }
 }));
 
 export default function Table(props) {
     const styled = useStyles();
     return (
-        <Grid 
+        <Grid
             className={styled.container}
         >
             {props.children}
