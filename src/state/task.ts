@@ -1,6 +1,6 @@
 import { observable, action, computed } from 'mobx';
 import ITask from '../interfaces/ITask';
-import { tasks as mockTasks } from '../mock';
+import { tasks as mockTasks, blocks } from '../mock';
 
 export interface ITaskStore {
     tasks: ITask[],
@@ -9,6 +9,7 @@ export interface ITaskStore {
     changePlaces: (firstId: number, secondId: number) => void,
     changeValue: (value: string) => void,
     setActiveTask: (task: ITask) => void,
+    changeBlockId: (taskId: string, blockId: string) => void,
     resetActiveTask: () => void
 }
 
@@ -69,6 +70,14 @@ class Task<ITaskStore> {
     @action
     setActiveTask = (task: ITask) => {
         this.activeTask = task;
+    }
+
+    @action 
+    changeBlockId = (taskId: string, blockId: string) => {
+        const currentBlock = this.tasks.find(t => t.id === taskId);
+        if(currentBlock) {
+            currentBlock.blockId = blockId
+        }
     }
 
     resetActiveTask = () => this.activeTask = null;

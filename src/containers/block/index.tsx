@@ -8,9 +8,10 @@ import AddTask from '../../components/add-task/index';
 import { inject, observer } from 'mobx-react';
 import shortId from 'shortid';
 import ITask from '../../interfaces/ITask';
-import EmptyPlace from '../../components/empty-place';
+import EmptyPlace from '../../components/empty-place/index';
 
 const BlockWrapper = styled.div`
+    position: relative;
     width: 250px;
 `
 
@@ -43,7 +44,7 @@ class Block extends Component<IProps> {
                             )
                         })
                     ) : (
-                            <EmptyPlace />
+                            <EmptyPlace {...{ block }} />
                         )}
                     <AddTask
                         callBack={(value) => {
