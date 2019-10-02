@@ -3,11 +3,11 @@ import ITable from '../../interfaces/IBlock';
 import { inject, observer } from 'mobx-react';
 import TableComponent from '../../components/table';
 import Block from '../block';
+import { IBlockStore } from '../../state/block';
 
 interface IProps {
     tableStore?: ITable,
-    /**TODO: replace any */
-    blockStore?: any
+    blockStore?: IBlockStore
 }
 
 @inject('blockStore')
@@ -16,14 +16,14 @@ class Table extends Component<IProps> {
     render() {
         const { blockStore } = this.props;
         if (blockStore) {
-            const { blocks } = blockStore;
+            const { blocks, changePlaces } = blockStore;
             if (Array.isArray(blocks) && blocks.length) {
                 return (
                     <TableComponent>
                         {blocks.map(block => (
                             <Block
                                 key={block.id}
-                                {...{ block }}
+                                {...{ block, id: block.id, changePlaces }}
                             />
                         ))}
                     </TableComponent>

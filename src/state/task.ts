@@ -36,9 +36,9 @@ class Task<ITaskStore> {
                 this.tasks = tasks.map(task => {
                     const { id } = task;
                     if (id === firstId) {
-                        return { ...secondTask }
+                        return secondTask
                     } else if (id === secondId) {
-                        return { ...firstTask }
+                        return firstTask
                     }
                     return task;
                 })
