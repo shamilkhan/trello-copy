@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ITable from '../../interfaces/IBlock';
+import AddBlock from '../../components/add-task';
 import { inject, observer } from 'mobx-react';
 import TableComponent from '../../components/table';
 import Block from '../block';
@@ -16,7 +17,7 @@ class Table extends Component<IProps> {
     render() {
         const { blockStore } = this.props;
         if (blockStore) {
-            const { blocks, changePlaces } = blockStore;
+            const { blocks, changePlaces, addNewBlock } = blockStore;
             if (Array.isArray(blocks) && blocks.length) {
                 return (
                     <TableComponent>
@@ -26,6 +27,7 @@ class Table extends Component<IProps> {
                                 {...{ block, id: block.id, changePlaces }}
                             />
                         ))}
+                        <AddBlock callBack={value => addNewBlock(value)} />                       
                     </TableComponent>
                 );
             }

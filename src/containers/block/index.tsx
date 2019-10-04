@@ -19,7 +19,18 @@ interface IBlockWrapper {
 const BlockWrapper = styled.div<IBlockWrapper>`
     position: relative;
     margin-right: 30px;
-    outline: 1px solid ${({ isDragging }) => isDragging ? "red" : "transparent"};
+    border-radius: 4px;
+    overflow: hidden;
+`
+
+
+const HideContent = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #1b2030;
 `
 
 const dropTarget = {
@@ -128,6 +139,7 @@ class Block extends Component<IProps> {
                                     addTask(task);
                                 }}
                             />
+                            {isDragging && (<HideContent />)}
                         </BlockWrapper>
                     </div>)
             )

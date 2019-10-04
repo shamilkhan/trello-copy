@@ -1,7 +1,8 @@
 import { observable, action, IObservableArray } from 'mobx';
 import IBlock from '../interfaces/IBlock';
-import { blocks as mockBlocks } from '../mock/';
+import { blocks as mockBlocks, blocks } from '../mock/';
 import { moveItem } from 'mobx-utils';
+import shortid from 'shortid';
 
 export interface IBlockStore {
     blocks: IObservableArray<IBlock>,
@@ -12,8 +13,12 @@ export interface IBlockStore {
 class Block<IBlockStore> {
     blocks: IObservableArray<IBlock> = observable.array(mockBlocks);
 
-    @action
-    addNewBlock(block: IBlock) {
+    @action.bound
+    addNewBlock(blockName: string) {
+        const block: IBlock = {
+            id: shortid.generate(),
+            name: blockName
+        }
         this.blocks.push(block);
     }
 

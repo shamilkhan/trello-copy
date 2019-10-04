@@ -1,6 +1,6 @@
 import { observable, action, autorun, computed } from 'mobx';
 import ITask from '../interfaces/ITask';
-import { tasks as mockTasks, blocks } from '../mock';
+import { tasks as mockTasks } from '../mock';
 
 export interface ITaskStore {
     tasks: ITask[],
