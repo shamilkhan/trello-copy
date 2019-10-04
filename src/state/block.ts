@@ -1,38 +1,33 @@
-import { observable, action } from 'mobx';
+import { observable, action, IObservableArray } from 'mobx';
 import IBlock from '../interfaces/IBlock';
 import { blocks as mockBlocks } from '../mock/';
+import { moveItem } from 'mobx-utils';
 
 export interface IBlockStore {
-    blocks: IBlock[],
+    blocks: IObservableArray<IBlock>,
     addNewBlock: Function,
     changePlaces: Function
 }
 
 class Block<IBlockStore> {
-    @observable
-    blocks: IBlock[] = mockBlocks;
+    blocks: IObservableArray<IBlock> = observable.array(mockBlocks);
 
     @action
     addNewBlock(block: IBlock) {
         this.blocks.push(block);
     }
+
     @action
     changePlaces = (firstId: string, secondId: string) => {
         const { blocks } = this;
-        const firstBlock = blocks.find(block => block.id === firstId);
-        const secondBlock = blocks.find(block => block.id === secondId);
-        if (firstBlock && secondBlock) {
-            this.blocks = blocks.map(block => {
-                if (block === firstBlock) {
-                    return secondBlock;
-                } else if (block === secondBlock) {
-                    return firstBlock;
-                } else {
-                    return block;
-                }
-            })
+        const firstIndex = blocks.findIndex(block => block.id === firstId);
+        const secondIndex = blocks.findIndex(block => block.id === secondId);
+        if (firstIndex > -1 && secondIndex > -1) {
+            moveItem(blocks, firstIndex, secondIndex)
         }
     }
 }
+
+
 
 export default new Block();

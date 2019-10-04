@@ -18,9 +18,8 @@ interface IBlockWrapper {
 
 const BlockWrapper = styled.div<IBlockWrapper>`
     position: relative;
-    width: 250px;
+    margin-right: 30px;
     outline: 1px solid ${({ isDragging }) => isDragging ? "red" : "transparent"};
-    cursor: pointer;
 `
 
 const dropTarget = {

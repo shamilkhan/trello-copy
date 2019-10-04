@@ -1,4 +1,4 @@
-import { observable, action, computed } from 'mobx';
+import { observable, action, autorun, computed } from 'mobx';
 import ITask from '../interfaces/ITask';
 import { tasks as mockTasks, blocks } from '../mock';
 
@@ -25,8 +25,8 @@ class Task<ITaskStore> {
         this.tasks.push(task)
     }
 
-    @action
-    changePlaces = (firstId: string, secondId: string) => {
+    @action.bound
+    changePlaces(firstId: string, secondId: string) {
         const { tasks } = this;
         const firstTask = tasks.find(task => task.id === firstId);
         const secondTask = tasks.find(task => task.id === secondId);
@@ -72,15 +72,16 @@ class Task<ITaskStore> {
         this.activeTask = task;
     }
 
-    @action 
+    @action
     changeBlockId = (taskId: string, blockId: string) => {
         const currentBlock = this.tasks.find(t => t.id === taskId);
-        if(currentBlock) {
+        if (currentBlock) {
             currentBlock.blockId = blockId
         }
     }
 
     resetActiveTask = () => this.activeTask = null;
 }
+
 
 export default new Task();
