@@ -14,6 +14,7 @@
     "mobx-react": "^6.1.1",
     "mobx-react-devtools": "^6.1.1",
     "mobx-utils": "^5.4.1",
+    "puppeteer": "^1.20.0",
     "react": "^16.8.6",
     "react-dnd": "^9.3.4",
     "react-dnd-html5-backend": "^9.3.4",
@@ -28,6 +29,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "e2e:test": "node e2e/index.js",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "clear-pack": "rm -rf node_modules && rm -rf package-lock.json"
